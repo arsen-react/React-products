@@ -1,45 +1,114 @@
-import React from "react";
+import React, { useState } from "react";
+import Product from "./Product";
+import { createProduct } from "./productUtils";
 
-const Product = ({
-  id,
-  title,
-  description,
-  content,
-  price,
-  manufacturer,
-  quantity,
-}) => (
-  <div>
-    <h2>{title}</h2>
-    <p>{description}</p>
-    <p>{content}</p>
-    <p>Price: {price}</p>
-    <p>Manufacturer: {manufacturer}</p>
-    <p>Quantity: {quantity}</p>
-  </div>
-);
+const ProductList = ({ products, setProducts }) => {
+  const [newProduct, setNewProduct] = useState({
+    id: null,
+    title: "",
+    description: "",
+    content: "",
+    price: "",
+    manufacturer: "",
+    quantity: "",
+  });
 
-const ProductList = () => (
-  <div>
-    <Product
-      id={1}
-      title="Product 1"
-      description="This is product 1"
-      content="Lorem ipsum dolor sit amet"
-      price={9.99}
-      manufacturer="Acme Inc."
-      quantity={10}
-    />
-    <Product
-      id={2}
-      title="Product 2"
-      description="This is product 2"
-      content="Consectetur adipiscing elit"
-      price={19.99}
-      manufacturer="XYZ Corp."
-      quantity={5}
-    />
-  </div>
-);
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setNewProduct((prevProduct) => ({
+      ...prevProduct,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const id = Date.now();
+    const product = createProduct(id, ...Object.values(newProduct));
+    setNewProduct({
+      id: null,
+      title: "",
+      description: "",
+      content: "",
+      price: "",
+      manufacturer: "",
+      quantity: "",
+    });
+    setProducts((prevProducts) => [...prevProducts, product]);
+  };
+
+  return (
+    <div>
+      <h1>My Products</h1>
+      {products.map((product) => (
+        <Product key={product.id} product={product} />
+      ))}
+      <form onSubmit={handleSubmit}>
+        <h2>Create New Product</h2>
+        <div>
+          <label htmlFor="title">Title: </label>
+          <input
+            type="text"
+            name="title"
+            value={newProduct.title}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="description">Description: </label>
+          <input
+            type="text"
+            name="description"
+            value={newProduct.description}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="content">Content: </label>
+          <input
+            type="text"
+            name="content"
+            value={newProduct.content}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="price">Price: </label>
+          <input
+            type="number"
+            name="price"
+            value={newProduct.price}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="manufacturer">Manufacturer: </label>
+          <input
+            type="text"
+            name="manufacturer"
+            value={newProduct.manufacturer}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="quantity">Quantity: </label>
+          <input
+            type="number"
+            name="quantity"
+            value={newProduct.quantity}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <button type="submit">Create Product</button>
+      </form>
+    </div>
+  );
+};
 
 export default ProductList;
