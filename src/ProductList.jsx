@@ -13,6 +13,9 @@ const ProductList = ({ products, setProducts }) => {
     quantity: "",
   });
 
+  const { title, description, content, price, manufacturer, quantity } =
+    newProduct;
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setNewProduct((prevProduct) => ({
@@ -26,6 +29,7 @@ const ProductList = ({ products, setProducts }) => {
     const id = Date.now();
     const product = createProduct(id, ...Object.values(newProduct));
     setNewProduct({
+      ...newProduct,
       id: null,
       title: "",
       description: "",
@@ -37,11 +41,21 @@ const ProductList = ({ products, setProducts }) => {
     setProducts((prevProducts) => [...prevProducts, product]);
   };
 
+  const handleDeleteProduct = (id) => {
+    setProducts((prevProducts) =>
+      prevProducts.filter((product) => product.id !== id)
+    );
+  };
+
   return (
     <div>
       <h1>My Products</h1>
       {products.map((product) => (
-        <Product key={product.id} product={product} />
+        <Product
+          key={product.id}
+          product={product}
+          onDelete={handleDeleteProduct}
+        />
       ))}
       <form onSubmit={handleSubmit}>
         <h2>Create New Product</h2>
@@ -50,7 +64,7 @@ const ProductList = ({ products, setProducts }) => {
           <input
             type="text"
             name="title"
-            value={newProduct.title}
+            value={title}
             onChange={handleInputChange}
             required
           />
@@ -60,7 +74,7 @@ const ProductList = ({ products, setProducts }) => {
           <input
             type="text"
             name="description"
-            value={newProduct.description}
+            value={description}
             onChange={handleInputChange}
             required
           />
@@ -70,7 +84,7 @@ const ProductList = ({ products, setProducts }) => {
           <input
             type="text"
             name="content"
-            value={newProduct.content}
+            value={content}
             onChange={handleInputChange}
             required
           />
@@ -80,7 +94,7 @@ const ProductList = ({ products, setProducts }) => {
           <input
             type="number"
             name="price"
-            value={newProduct.price}
+            value={price}
             onChange={handleInputChange}
             required
           />
@@ -90,7 +104,7 @@ const ProductList = ({ products, setProducts }) => {
           <input
             type="text"
             name="manufacturer"
-            value={newProduct.manufacturer}
+            value={manufacturer}
             onChange={handleInputChange}
             required
           />
@@ -100,7 +114,7 @@ const ProductList = ({ products, setProducts }) => {
           <input
             type="number"
             name="quantity"
-            value={newProduct.quantity}
+            value={quantity}
             onChange={handleInputChange}
             required
           />
