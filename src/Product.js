@@ -1,15 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
+import EditProduct from "./EditProduct";
 
-const Product = ({ product, onDelete }) => {
+const Product = ({ product, onDelete, onEdit, onSave }) => {
+  const [editing, setEditing] = useState(false);
+  const [updatedProduct, setUpdatedProduct] = useState(product);
+
+  const handleEdit = () => {
+    setEditing(true);
+  };
+
+  const handleCancel = () => {
+    setEditing(false);
+  };
+
+  const handleSave = (editedProduct) => {
+    setUpdatedProduct(editedProduct);
+    setEditing(false);
+    // Call the onSave callback function to update the state in the parent component
+    onSave(editedProduct);
+  };
+
   return (
     <div>
-      <h2>{product.title}</h2>
-      <p>{product.description}</p>
-      <p>{product.content}</p>
-      <p>{product.price}</p>
-      <p>{product.manufacturer}</p>
-      <p>{product.quantity}</p>
-      <button onClick={() => onDelete && onDelete(product.id)}>Delete</button>
+      {editing ? (
+        <EditProduct
+          product={updatedProduct}
+          onSave={handleSave}
+          onCancel={handleCancel}
+        />
+      ) : (
+        <>
+          <h2>{updatedProduct.title}</h2>
+          <p>{updatedProduct.description}</p>
+          <p>{updatedProduct.content}</p>
+          <p>{updatedProduct.price}</p>
+          <p>{updatedProduct.manufacturer}</p>
+          <p>{updatedProduct.quantity}</p>
+          <button onClick={handleEdit}>Edit</button>
+          <button onClick={() => onDelete(updatedProduct.id)}>Delete</button>
+        </>
+      )}
     </div>
   );
 };
