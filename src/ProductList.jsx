@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Product from "./Product";
 import EditProduct from "./EditProduct";
+import Product from "./Product";
 
 const ProductList = ({ products, setProducts }) => {
   const [editingProductId, setEditingProductId] = useState(null);
@@ -42,6 +42,7 @@ const ProductList = ({ products, setProducts }) => {
             onDelete={handleDeleteProduct}
             onEdit={handleEditProduct}
             onSave={handleUpdateProduct}
+            setProducts={setProducts} // add this prop
           />
         )
       )}
