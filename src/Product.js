@@ -30,14 +30,14 @@ const Product = ({ product, onDelete, onEdit, onSave }) => {
         />
       ) : (
         <>
-          <h2>{updatedProduct.title}</h2>
-          <p>{updatedProduct.description}</p>
-          <p>{updatedProduct.content}</p>
-          <p>{updatedProduct.price}</p>
-          <p>{updatedProduct.manufacturer}</p>
-          <p>{updatedProduct.quantity}</p>
+          <h2>Title: {updatedProduct.title}</h2>
+          <p>Description: {updatedProduct.description}</p>
+          <p>Content: {updatedProduct.content}</p>
+          <p>Price: {updatedProduct.price}</p>
+          <p>mMnufacturer: {updatedProduct.manufacturer}</p>
+          <p>Quantity: {updatedProduct.quantity}</p>
           <button onClick={handleEdit}>Edit</button>
-          <button onClick={() => onDelete(updatedProduct.id)}>Delete</button>
+          <button onClick={() => onDelete(product.id)}>Delete</button>
         </>
       )}
     </div>

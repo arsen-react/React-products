@@ -24,20 +24,6 @@ const App = () => {
     },
   ]);
 
-  const handleDelete = (productId) => {
-    setProducts((prevProducts) =>
-      prevProducts.filter((product) => product.id !== productId)
-    );
-  };
-
-  const handleEdit = (editedProduct) => {
-    setProducts((prevProducts) =>
-      prevProducts.map((product) =>
-        product.id === editedProduct.id ? editedProduct : product
-      )
-    );
-  };
-
   const handleAddProduct = (newProduct) => {
     setProducts((prevProducts) => [...prevProducts, newProduct]);
   };
@@ -45,11 +31,7 @@ const App = () => {
   return (
     <div>
       <h1>Product List</h1>
-      <ProductList
-        products={products}
-        onDelete={handleDelete}
-        onEdit={handleEdit}
-      />
+      <ProductList products={products} setProducts={setProducts} />
       <SetProduct onSubmit={handleAddProduct} />
     </div>
   );
