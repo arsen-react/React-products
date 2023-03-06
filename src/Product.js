@@ -16,7 +16,7 @@ const Product = ({ product, onDelete, onEdit, onSave }) => {
   const handleSave = (editedProduct) => {
     setUpdatedProduct(editedProduct);
     setEditing(false);
-    // Call the onSave callback function to update the state in the parent component
+    // call the onSave callback function to update the state in the parent component
     onSave(editedProduct);
   };
 

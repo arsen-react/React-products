@@ -42,7 +42,7 @@ const ProductList = ({ products, setProducts }) => {
             onDelete={handleDeleteProduct}
             onEdit={handleEditProduct}
             onSave={handleUpdateProduct}
-            setProducts={setProducts} // add this prop
+            setProducts={setProducts} 
           />
         )
       )}
